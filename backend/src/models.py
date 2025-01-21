@@ -1,11 +1,15 @@
 """Item model for ORM"""
 
-from sqlalchemy import String, Integer, Column, Text
+from sqlalchemy import Column, String, Text, DateTime
+from sqlalchemy.dialects.postgresql import UUID
+from datetime import datetime
+import uuid
 from db import Base
 
 class Item(Base):
-    """Item dscription for orm"""
-    __tablename__ = 'items'
-    type=Column(String(255))
-    title=Column(Text)
-    position=Column(Integer, primary_key=True, unique=True, nullable=False)
+    __tablename__ = "items"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, nullable=False)
+    name = Column(String(255), nullable=False)
+    description = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)

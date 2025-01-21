@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "./Button";
 
-export const TabelRow = ({ nama, deskripsi, ditambahkanPada, onEdit, onDelete }) => {
+export const TabelRow = ({ id, nama, deskripsi, ditambahkanPada, onEdit, onDelete }) => {
     return (
         <tr>
             <td>{nama}</td>
