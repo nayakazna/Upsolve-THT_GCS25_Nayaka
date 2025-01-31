@@ -36,6 +36,14 @@ class Item(BaseModel):
         """required for sqlalchemy"""
         orm_mode = True
 
+class ItemCreate(BaseModel):
+    """item model for creating a new item (excludes id and created_at)"""
+    name: str
+    description: str
+
+    class Config:
+        orm_mode = True
+
 class ItemUpdate(BaseModel):
     """item model for update requests (excludes created_at)"""
     name: str
@@ -75,7 +83,7 @@ async def get_item(id: str):
     return item
 
 @app.post("/items", response_model=Item, status_code=status.HTTP_201_CREATED)
-async def create_item(item: Item):
+async def create_item(item: ItemCreate):
     """create an item"""
     new_item = models.Item(name=item.name, description=item.description)
     db.add(new_item)

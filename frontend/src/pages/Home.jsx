@@ -21,16 +21,16 @@ function Home() {
         const newDescription = prompt("Enter description:");
         if (newDescription === null) return;
         const newItem = { name: newName, description: newDescription };
-
+    
         const response = await fetch('http://localhost:8000/items', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newItem),
         });
-
+    
         const createdItem = await response.json();
         setData([...data, createdItem]);
-    };
+    };    
 
     const handleDelete = async (itemId) => {
         await fetch(`http://localhost:8000/items/${itemId}`, { method: 'DELETE' });
