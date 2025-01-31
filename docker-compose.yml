@@ -33,6 +33,8 @@ services:
             - postgres
         volumes:
             - ./backend/src:/backend/src
+        environment:
+            - CORS_ORIGINS=http://localhost:5173
 
     frontend:
         networks:

@@ -1,6 +1,10 @@
 import React from "react";
 import "./Tabel.css";
 import { TabelRow } from "./TabelRow"; 
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+};
 
 export const Tabel = ({ data, setData, onDelete, onEdit }) => {
     return (
@@ -21,7 +25,7 @@ export const Tabel = ({ data, setData, onDelete, onEdit }) => {
                             id={item.id}
                             nama={item.name}
                             deskripsi={item.description}
-                            ditambahkanPada={item.created_at}
+                            ditambahkanPada={formatDate(item.createdAt)}
                             onEdit={() => onEdit(item.id)}
                             onDelete={() => onDelete(item.id)}
                         />

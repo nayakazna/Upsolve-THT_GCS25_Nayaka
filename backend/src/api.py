@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from db import SessionLocal, engine
 from sqlalchemy import exc
+from uuid import UUID
+from datetime import datetime
 
 import models
 
@@ -26,10 +28,20 @@ app.add_middleware(
 
 class Item(BaseModel):
     """item model for fastapi"""
+    id: UUID 
     name: str
     description: str
+    created_at: datetime
     class Config:
         """required for sqlalchemy"""
+        orm_mode = True
+
+class ItemUpdate(BaseModel):
+    """item model for update requests (excludes created_at)"""
+    name: str
+    description: str
+
+    class Config:
         orm_mode = True
 
 db = SessionLocal()
@@ -72,7 +84,7 @@ async def create_item(item: Item):
     return new_item
 
 @app.put("/items/{id}", response_model=Item, status_code=status.HTTP_200_OK)
-async def update_item(id: str, item: Item):
+async def update_item(id: str, item: ItemUpdate):
     """update an item"""
     item_to_update = db.query(models.Item).filter(models.Item.id == id).first()
     if item_to_update is None:

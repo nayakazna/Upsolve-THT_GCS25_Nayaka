@@ -37,6 +37,7 @@ function App() {
 
     const handleDelete = async (itemId) => {
     // Send a DELETE request
+    console.log("Deleting item with ID:", itemId); 
     await fetch(`http://localhost:8000/items/${itemId}`, {
         method: 'DELETE',
     });
@@ -46,6 +47,7 @@ function App() {
     };
 
     const handleEdit = async (itemId) => {
+        console.log("Editing item with ID:", itemId);
         const itemToEdit = data.find(item => item.id === itemId);
         const newName = prompt("Enter new name:", itemToEdit.name);
         if (newName === null) return;
@@ -56,7 +58,7 @@ function App() {
         const response = await fetch(`http://localhost:8000/items/${itemId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: newName, description: newDescription }),
+            body: JSON.stringify({name: newName, description: newDescription }),
     });
 
     const updatedItem = await response.json();
